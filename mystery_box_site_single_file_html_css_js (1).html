@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MysteryBox — Caixas Misteriosas por Assinatura</title>
+  <meta name="description" content="Assinatura mensal de caixas misteriosas + loja de caixas temáticas. Designs em preto e amarelo, responsivo." />
+  <style>
+    :root{
+      --yellow:#ffd400;
+      --black:#0a0a0a;
+      --muted:#f3f3f3;
+      --gap:16px;
+      --radius:12px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--black),#000000);color:#fff;min-height:100vh}
+    a{color:inherit;text-decoration:none}
+
+    /* Layout */
+    .site{display:flex;flex-direction:column;min-height:100vh}
+    header{background:linear-gradient(90deg,var(--black) 0%, #111 100%);border-bottom:4px solid var(--yellow);}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:var(--gap);padding:12px 20px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--yellow),#ffb400);display:grid;place-items:center;color:var(--black);font-weight:800}
+    nav{display:flex;gap:12px;flex-wrap:wrap}
+    nav a{padding:8px 12px;border-radius:8px;font-weight:600}
+    nav a:hover{background:rgba(255,212,0,0.12)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:center;padding:36px 20px}
+    .hero .intro{max-width:720px}
+    .eyebrow{display:inline-block;background:var(--yellow);color:var(--black);padding:6px 10px;border-radius:999px;font-weight:700}
+    h1{font-size:clamp(28px,4vw,44px);margin:12px 0}
+    p.lead{color:#e6e6e6;font-size:1.05rem;margin-bottom:18px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{background:var(--yellow);color:var(--black);padding:12px 18px;border-radius:10px;font-weight:700;border:none;cursor:pointer}
+    .btn.ghost{background:transparent;border:2px solid var(--yellow);color:var(--yellow)}
+
+    .hero-card{background:linear-gradient(180deg,#111,#0d0d0d);padding:18px;border-radius:14px;border:2px solid rgba(255,212,0,0.08)}
+    .promo{display:flex;gap:12px;align-items:center}
+    .promo img{width:100%;height:220px;object-fit:cover;border-radius:10px}
+
+    /* Sections */
+    main{padding:24px 20px;flex:1}
+    .container{max-width:1200px;margin:0 auto}
+    .grid{display:grid;gap:var(--gap)}
+
+    /* product grid */
+    .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .card{background:#0f0f0f;border-radius:12px;padding:12px;border:1px solid rgba(255,212,0,0.06)}
+    .card img{width:100%;height:180px;object-fit:cover;border-radius:8px}
+    .card h3{margin:8px 0 6px;font-size:1.05rem}
+    .price{font-weight:800;color:var(--yellow)}
+    .small{font-size:.9rem;color:#ccc}
+
+    /* product page */
+    .product-page{display:grid;grid-template-columns:1fr 420px;gap:20px}
+    .product-gallery{display:grid;gap:8px}
+    .product-gallery img{width:100%;height:360px;object-fit:cover;border-radius:10px}
+
+    /* search */
+    .search-row{display:flex;gap:10px}
+    .search-row input[type="search"]{flex:1;padding:10px;border-radius:10px;border:2px solid rgba(255,255,255,0.06);background:#0b0b0b;color:#fff}
+
+    /* contact and forms */
+    form{display:grid;gap:12px}
+    label{font-weight:700}
+    input[type=text],input[type=email],input[type=tel],select,textarea{padding:12px;border-radius:10px;border:2px solid rgba(255,255,255,0.06);background:#070707;color:#fff}
+    textarea{min-height:120px;resize:vertical}
+
+    /* orders/cart */
+    .orders-list{display:grid;gap:12px}
+    .order-item{display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;background:#0b0b0b}
+    .order-item img{width:84px;height:64px;object-fit:cover;border-radius:8px}
+    .qty{width:72px}
+
+    /* footer */
+    footer{border-top:4px solid var(--yellow);padding:18px 20px;background:#070707}
+    .foot-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+    /* responsive */
+    @media(max-width:1100px){
+      .products-grid{grid-template-columns:repeat(3,1fr)}
+      .hero{grid-template-columns:1fr 320px}
+      .product-page{grid-template-columns:1fr}
+    }
+    @media(max-width:900px){
+      .products-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:550px){
+      .hero{grid-template-columns:1fr}
+      nav{display:none}
+      .topbar{padding:12px}
+      .products-grid{grid-template-columns:repeat(1,1fr)}
+      .logo{width:46px;height:46px}
+      .hero-card{padding:12px}
+    }
+
+    /* small util */
+    .muted{color:#bfbfbf}
+    .badge{background:var(--yellow);color:var(--black);padding:6px 8px;border-radius:6px;font-weight:800}
+    .hidden{display:none}
+
+    /* accessibility focus */
+    a:focus,button:focus,input:focus{outline:3px solid rgba(255,212,0,0.14);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <div class="site" id="app">
+    <header>
+      <div class="topbar container">
+        <div class="brand">
+          <div class="logo">MB</div>
+          <div>
+            <div style="font-weight:800">MysteryBox</div>
+            <div class="small muted">Surpreenda-se todo mês</div>
+          </div>
+        </div>
+
+        <nav aria-label="Menu principal">
+          <a href="#" data-route="home">Início</a>
+          <a href="#" data-route="products">Produtos</a>
+          <a href="#" data-route="search">Buscar</a>
+          <a href="#" data-route="about">Quem somos</a>
+          <a href="#" data-route="orders">Pedidos</a>
+          <a href="#" data-route="contact">Contato</a>
+          <a href="#" data-route="signup" class="badge">Assine Já</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- PÁGINAS (SPA simples) -->
+      <section id="page-home" class="page">
+        <section class="hero">
+          <div class="intro">
+            <span class="eyebrow">Lançamento</span>
+            <h1>Caixas misteriosas todo mês — assine e receba surpresas</h1>
+            <p class="lead">Receba em casa caixas misteriosas curadas por tema. Assinatura mensal ou compras avulsas — temática geek, culinária, beleza, colecionáveis e muito mais.</p>
+            <div class="cta-row">
+              <button class="btn" data-route="signup">Comece a assinar</button>
+              <button class="btn ghost" data-route="products">Ver lojas e temas</button>
+            </div>
+            <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+              <div class="small muted">Frete grátis para assinantes (BR) | Entrega em até 7 dias úteis</div>
+              <div class="small muted">Cancelamento fácil — cancele quando quiser</div>
+            </div>
+          </div>
+
+          <aside class="hero-card">
+            <div class="promo">
+              <img src="https://picsum.photos/seed/mystery1/800/500" alt="caixa misteriosa" />
+            </div>
+            <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div class="small muted">Oferta</div>
+                <div style="font-weight:800">Primeira caixa por R$39,90</div>
+              </div>
+              <button class="btn" data-route="signup">Assinar</button>
+            </div>
+          </aside>
+        </section>
+
+        <section style="margin-top:24px">
+          <h2 style="display:flex;align-items:center;gap:12px"><span class="badge">Novidades</span> Destaques do mês</h2>
+          <div class="products-grid" id="home-grid" style="margin-top:12px">
+            <!-- cards gerados por JS -->
+          </div>
+        </section>
+      </section>
+
+      <section id="page-products" class="page hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
+          <h2>Loja — Caixas e Temas</h2>
+          <div class="search-row" style="max-width:420px">
+            <input type="search" id="global-search" placeholder="Buscar por tema, nome ou tag..." />
+            <button class="btn" id="search-button">Buscar</button>
+          </div>
+        </div>
+        <div class="products-grid" id="products-grid">
+          <!-- produtos por JS -->
+        </div>
+      </section>
+
+      <section id="page-search" class="page hidden">
+        <h2>Resultados da busca</h2>
+        <div id="search-results" style="margin-top:12px" class="products-grid"></div>
+      </section>
+
+      <section id="page-product" class="page hidden">
+        <div class="product-page">
+          <div>
+            <div class="product-gallery" id="product-gallery">
+              <!-- imagens -->
+            </div>
+            <div style="margin-top:12px" id="product-desc"></div>
+          </div>
+          <aside style="position:relative">
+            <div class="card">
+              <h3 id="product-title"></h3>
+              <div class="price" id="product-price"></div>
+              <div class="small muted" style="margin:8px 0">Envio Estimado: 3-7 dias úteis</div>
+              <label>Quantidade</label>
+              <input type="number" id="product-qty" min="1" value="1" />
+              <button class="btn" style="margin-top:12px" id="add-to-orders">Adicionar a pedidos</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="page-contact" class="page hidden">
+        <h2>Contato</h2>
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;margin-top:12px">
+          <div>
+            <form id="contact-form">
+              <label>Nome</label>
+              <input type="text" name="name" required />
+              <label>E-mail</label>
+              <input type="email" name="email" required />
+              <label>Assunto</label>
+              <input type="text" name="subject" />
+              <label>Mensagem</label>
+              <textarea name="message" required></textarea>
+              <button class="btn" type="submit">Enviar mensagem</button>
+            </form>
+          </div>
+          <aside class="card">
+            <h3>Fale conosco</h3>
+            <p class="small muted">Email: suporte@mysterybox.com.br</p>
+            <p class="small muted">Tel: (11) 99999-9999</p>
+            <p class="small muted">Atendimento: 9h — 18h (Seg — Sex)</p>
+            <img src="https://picsum.photos/seed/contact/600/300" alt="contato" style="width:100%;margin-top:12px;border-radius:8px" />
+          </aside>
+        </div>
+      </section>
+
+      <section id="page-about" class="page hidden">
+        <h2>Quem somos</h2>
+        <div style="display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;margin-top:12px">
+          <div class="card">
+            <h3>Nossa missão</h3>
+            <p style="font-size:1rem;line-height:1.5">A MysteryBox nasceu para tornar o inesperado parte do seu dia a dia. Montamos caixas temáticas com curadoria cuidadosa, com foco em qualidade e surpresa. Oferecemos assinaturas mensais e vendas avulsas — tudo pensado para encantar.</p>
+            <h3 style="margin-top:12px">Como funciona</h3>
+            <ol style="padding-left:18px">
+              <li>Escolha assinatura ou compra avulsa</li>
+              <li>Receba caixas em sua casa todo mês</li>
+              <li>Desfrute e compartilhe a surpresa!</li>
+            </ol>
+          </div>
+          <aside>
+            <div class="card">
+              <h3>Valores</h3>
+              <ul>
+                <li>Surpresa com responsabilidade</li>
+                <li>Qualidade e curadoria</li>
+                <li>Transparência</li>
+              </ul>
+              <img src="https://picsum.photos/seed/about/500/300" alt="quem somos" style="width:100%;margin-top:12px;border-radius:8px" />
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="page-signup" class="page hidden">
+        <h2>Cadastro / Assinatura</h2>
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;margin-top:12px">
+          <div>
+            <form id="signup-form">
+              <label>Nome completo</label>
+              <input type="text" name="fullname" required />
+              <label>E-mail</label>
+              <input type="email" name="email" required />
+              <label>Endereço</label>
+              <input type="text" name="address" required />
+              <label>Plano</label>
+              <select name="plan">
+                <option value="monthly">Mensal — R$59,90</option>
+                <option value="quarter">Trimestral — R$169,90</option>
+                <option value="year">Anual — R$599,90</option>
+              </select>
+              <label>Observações</label>
+              <textarea name="notes" placeholder="Informações de entrega, apelido, alergias..."></textarea>
+              <button class="btn" type="submit">Cadastrar e Assinar</button>
+            </form>
+          </div>
+          <aside class="card">
+            <h3>Por que assinar?</h3>
+            <p class="small muted">Assinantes têm descontos exclusivos, envio prioritário e brindes surpresa ocasionais.</p>
+            <img src="https://picsum.photos/seed/signup/500/300" alt="assinatura" style="width:100%;margin-top:12px;border-radius:8px" />
+          </aside>
+        </div>
+      </section>
+
+      <section id="page-orders" class="page hidden">
+        <h2>Meus Pedidos</h2>
+        <div class="orders-list" id="orders-list" style="margin-top:12px">
+          <!-- itens do pedido -->
+        </div>
+        <div style="margin-top:12px;display:flex;gap:12px;align-items:center">
+          <label class="small muted">Cupom</label>
+          <input type="text" id="coupon" placeholder="INSIRA CUPOM" />
+          <button class="btn" id="apply-coupon">Aplicar</button>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div class="container foot-row">
+        <div>
+          <div style="font-weight:800">MysteryBox</div>
+          <div class="small muted">© 2025 MysteryBox — Todos os direitos reservados</div>
+        </div>
+        <div class="small muted">Siga-nos nas redes — @mysterybox</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /* Dados de exemplo (poderiam vir de uma API) */
+    const sampleProducts = [
+      {id:1,title:'Caixa Geek - Assinatura',price:59.9,tags:['geek','nerd'],images:["https://picsum.photos/seed/g1/900/600","https://picsum.photos/seed/g2/900/600"] ,desc:'Itens colecionáveis, miniaturas e surpresas para fãs de cultura pop.'},
+      {id:2,title:'Caixa Culinária - Temática',price:79.9,tags:['culinaria','food'],images:["https://picsum.photos/seed/f1/900/600","https://picsum.photos/seed/f2/900/600"],desc:'Especiarias, receitas e gadgets para quem ama cozinhar.'},
+      {id:3,title:'Caixa Beauty - Edição',price:49.9,tags:['beleza','skincare'],images:["https://picsum.photos/seed/b1/900/600","https://picsum.photos/seed/b2/900/600"],desc:'Produtos de beleza e cuidados com curadoria.'},
+      {id:4,title:'Caixa Horror - Edição Limitada',price:69.9,tags:['terror','colecao'],images:["https://picsum.photos/seed/h1/900/600","https://picsum.photos/seed/h2/900/600"],desc:'Itens temáticos para fãs de suspense e horror.'},
+      {id:5,title:'Caixa Kids - Diversão',price:39.9,tags:['crianca','kids'],images:["https://picsum.photos/seed/k1/900/600","https://picsum.photos/seed/k2/900/600"],desc:'Brinquedos e atividades educativas.'},
+      {id:6,title:'Caixa Retro - Colecionador',price:99.9,tags:['retro','colecionavel'],images:["https://picsum.photos/seed/r1/900/600","https://picsum.photos/seed/r2/900/600"],desc:'Peças retrô, pôsteres e lembranças.'}
+    ];
+
+    // Simple SPA routing
+    const pages = document.querySelectorAll('.page');
+    function goto(route){
+      pages.forEach(p=>p.classList.add('hidden'));
+      document.querySelectorAll('[data-route]').forEach(e=>e.classList.remove('active'));
+      // map route to page id
+      const map = {
+        home:'page-home',products:'page-products',search:'page-search',about:'page-about',contact:'page-contact',signup:'page-signup',orders:'page-orders',product:'page-product'
+      };
+      const id = map[route] || 'page-home';
+      document.getElementById(id).classList.remove('hidden');
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    document.addEventListener('click',e=>{
+      const r = e.target.closest('[data-route]');
+      if(r){e.preventDefault();goto(r.getAttribute('data-route'))}
+      const a = e.target.closest('a[data-route]');
+      if(a){e.preventDefault();goto(a.getAttribute('data-route'))}
+    });
+
+    // render product cards
+    function renderGrid(target,items){
+      const wrap = document.getElementById(target);
+      wrap.innerHTML = '';
+      items.forEach(p=>{
+        const card = document.createElement('article');card.className='card';
+        card.innerHTML = `
+          <img src="${p.images[0]}" alt="${p.title}" />
+          <h3>${p.title}</h3>
+          <div class="small muted">${p.tags.join(' • ')}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <div class="price">R$ ${p.price.toFixed(2).replace('.',',')}</div>
+            <div>
+              <button class="btn" data-action="view" data-id="${p.id}">Ver</button>
+            </div>
+          </div>
+        `;
+        wrap.appendChild(card);
+      })
+    }
+    renderGrid('home-grid',sampleProducts.slice(0,4));
+    renderGrid('products-grid',sampleProducts);
+
+    // view product
+    document.addEventListener('click',e=>{
+      const btn = e.target.closest('[data-action=view]');
+      if(btn){
+        const id = Number(btn.dataset.id);
+        openProduct(id);
+      }
+    });
+    function openProduct(id){
+      const p = sampleProducts.find(x=>x.id===id);
+      if(!p) return;
+      document.getElementById('product-title').textContent = p.title;
+      document.getElementById('product-price').textContent = 'R$ '+p.price.toFixed(2).replace('.',',');
+      document.getElementById('product-desc').innerHTML = '<p class="muted">'+p.desc+'</p>';
+      const g = document.getElementById('product-gallery');
+      g.innerHTML = p.images.map(src=>`<img src="${src}" alt="${p.title}" />`).join('');
+      document.getElementById('page-product').classList.remove('hidden');
+      pages.forEach(p=>{ if(p.id!=='page-product') p.classList.add('hidden') });
+      window.scrollTo({top:0,behavior:'smooth'});
+      currentProduct = p;
+    }
+
+    // simple search
+    document.getElementById('search-button').addEventListener('click',()=>doSearch());
+    document.getElementById('global-search').addEventListener('keydown',e=>{ if(e.key==='Enter') doSearch() });
+    function doSearch(){
+      const q = document.getElementById('global-search').value.trim().toLowerCase();
+      const res = sampleProducts.filter(p=>p.title.toLowerCase().includes(q) || p.tags.join(' ').includes(q) );
+      renderGrid('search-results',res);
+      goto('search');
+    }
+
+    // orders (cart-like) stored in localStorage simple
+    let orders = JSON.parse(localStorage.getItem('mb_orders')||'[]');
+    function renderOrders(){
+      const list = document.getElementById('orders-list');
+      list.innerHTML='';
+      if(orders.length===0){ list.innerHTML = '<div class="card">Você não tem pedidos ainda.</div>'; return }
+      orders.forEach((o,idx)=>{
+        const item = document.createElement('div');item.className='order-item';
+        item.innerHTML = `
+          <img src="${o.image}" alt="${o.title}" />
+          <div style="flex:1">
+            <div style="font-weight:700">${o.title}</div>
+            <div class="small muted">R$ ${o.price.toFixed(2).replace('.',',')}</div>
+          </div>
+          <div>
+            <label>Qtd</label>
+            <input class="qty" type="number" min="1" value="${o.qty}" data-idx="${idx}" />
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button class="btn" data-action="remove" data-idx="${idx}">Remover</button>
+          </div>
+        `;
+        list.appendChild(item);
+      })
+    }
+    function saveOrders(){ localStorage.setItem('mb_orders',JSON.stringify(orders)); renderOrders(); }
+
+    document.getElementById('add-to-orders').addEventListener('click',()=>{
+      const qty = Number(document.getElementById('product-qty').value)||1;
+      if(!currentProduct) return;
+      orders.push({id:currentProduct.id,title:currentProduct.title,price:currentProduct.price,image:currentProduct.images[0],qty});
+      saveOrders();
+      goto('orders');
+    });
+
+    document.addEventListener('input',e=>{
+      if(e.target.matches('.qty')){
+        const idx = Number(e.target.dataset.idx);
+        orders[idx].qty = Number(e.target.value)||1; saveOrders();
+      }
+    });
+    document.addEventListener('click',e=>{
+      const r = e.target.closest('[data-action=remove]');
+      if(r){ const idx = Number(r.dataset.idx); orders.splice(idx,1); saveOrders() }
+    });
+
+    // forms
+    document.getElementById('contact-form').addEventListener('submit',e=>{ e.preventDefault(); alert('Mensagem enviada. Obrigado!'); e.target.reset(); });
+    document.getElementById('signup-form').addEventListener('submit',e=>{ e.preventDefault(); alert('Cadastro realizado! Um e-mail de boas-vindas foi enviado.'); e.target.reset(); });
+
+    document.getElementById('apply-coupon').addEventListener('click',()=>{ const cup = document.getElementById('coupon').value.trim(); if(!cup) return alert('Insira um cupom'); alert('Cupom "'+cup+'" aplicado (simulação)'); });
+
+    // init
+    let currentProduct = null;
+    renderOrders();
+    goto('home');
+  </script>
+</body>
+</html>
